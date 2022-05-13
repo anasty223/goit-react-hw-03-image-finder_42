@@ -7,12 +7,12 @@ class Searchbar extends Component {
   handleSetQuery = (e) => {
    const { name, value } = e.currentTarget;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value.toLowerCase() });
 }
 onSubmitForm=(e)=> {
     e.preventDefault();
-console.log('this.state', this.state)
-    this.props.onSubmit(this.state);
+console.log('this.state in form', this.state)
+    this.props.onSubmit(this.state.query);
 
     this.reset();
 
@@ -25,9 +25,7 @@ console.log('this.state', this.state)
     return (
       <Header>
         <form className="form" onSubmit={this.onSubmitForm}>
-          <Button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </Button>
+         
 
           <Input
             value={this.state.query}
@@ -38,6 +36,9 @@ console.log('this.state', this.state)
             //     //   autofocus
             placeholder="Search images and photos"
           />
+           <Button type="submit" className="button">
+            <span className="button-label">Search</span>
+          </Button>
         </form>
       </Header>
     );

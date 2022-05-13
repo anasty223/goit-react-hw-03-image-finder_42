@@ -1,8 +1,8 @@
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
-
+import {List} from './ImageGallery.styles'
 const ImageGallery = ({ images }) => {
   return (
-    <ul >
+    <List >
       {images.map(({ id, webformatURL,tags }) => (
         <ImageGalleryItem
           key={id}
@@ -10,7 +10,7 @@ const ImageGallery = ({ images }) => {
           tags={tags}
         />
       ))}
-    </ul>
+    </List>
   );
 };
 export default ImageGallery;

@@ -21,28 +21,31 @@ export const Header=styled.header`
 `
 
 export const Button = styled.button`
- padding: 8px 16px;
-  border-radius: 2px;
- transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
-  display: inline-block;
- border: 0;
-  text-decoration: none;
-  cursor: pointer;
- font-size: 18px;
-  line-height: 24px;
-  font-style: normal;
-  font-weight: 500;
-  min-width: 180px;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+height: 34px;
+  width: 80px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid grey;
+  &: hover {
+    background-color:grey;
+    color: white;
+    border: 1px solid grey;
+  }
+
 `
 export const Input = styled.input`
- display: inline-block;
-//   width: 100%;
-margin-left:10px;
-  font-size: 25px;
-  border: none;
-  outline: none;
-  padding-left: 4px;
-  padding-right: 4px;`
+
+  width: 280px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 3px;
+  font-size: 20px;
+  border: 1px solid grey;
+  &: hover {
+    border: 1px solid grey;
+  }
+  &: focus {
+    border: 1px solid blue;
+  } ;
+  `
