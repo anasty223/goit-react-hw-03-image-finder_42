@@ -1,12 +1,10 @@
 import { Component } from "react";
-import styled from "styled-components";
 import "./App.css";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Searchbar from "./components/Searchbar/Searchbar";
 import fetchImages from "./servises/fetchImages";
-import { ToastContainer, toast } from "react-toastify";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Oval } from "react-loader-spinner";
+import Modal from "./components/Modal/Modal";
 
 class App extends Component {
   state = {
@@ -14,7 +12,18 @@ class App extends Component {
     searchQuery: "",
     page: 1,
     isPending: false,
+    showModal: false,
+    modalImg: "",
+    modalAlt: "",
   };
+  toggleModal = (image, alt) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      modalImg: image,
+      modalAlt: alt,
+    }));
+  };
+
   formSubmitHandler = (searchQuery) => {
     console.log("searchQuery", searchQuery);
     this.setState({ searchQuery, isPending: true });
@@ -49,21 +58,22 @@ class App extends Component {
   }
 
   render() {
-    const { images, isPending } = this.state;
+    const { images, isPending, showModal } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.formSubmitHandler} />
 
         {isPending && <Oval color="#00BFFF" height={80} width={80} />}
-        <ImageGallery images={images} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-        />
+
+        <ImageGallery images={images} handleTogleModal={this.toggleModal} />
+
+        {showModal && (
+          <Modal
+            modalImg={this.state.modalImg}
+            handleTogleModal={this.toggleModal}
+            tag={this.state.modalAlt}
+          />
+        )}
       </>
     );
   }
