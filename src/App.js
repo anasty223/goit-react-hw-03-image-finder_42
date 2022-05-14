@@ -1,15 +1,19 @@
 import { Component } from "react";
+import styled from "styled-components";
 import "./App.css";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Searchbar from "./components/Searchbar/Searchbar";
 import fetchImages from "./servises/fetchImages";
+import { ToastContainer, toast } from "react-toastify";
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Oval } from "react-loader-spinner";
 
 class App extends Component {
   state = {
     images: [],
     searchQuery: "",
     page: 1,
-    isPending: true,
+    isPending: false,
   };
   formSubmitHandler = (searchQuery) => {
     console.log("searchQuery", searchQuery);
@@ -24,7 +28,13 @@ class App extends Component {
           if (img.length === 0) {
             return (
               this.setState({ isPending: false }),
-              alert(`нет картинок с запросом "${searchQuery}`)
+              alert(`нет картинок с запросом "${searchQuery}"`)
+            );
+          }
+          if (searchQuery.trim() === "") {
+            return (
+              this.setState({ isPending: false, images: [] }),
+              alert(`Enter text`)
             );
           }
           this.setState((prev) => ({
@@ -39,12 +49,21 @@ class App extends Component {
   }
 
   render() {
-    const { images } = this.state;
+    const { images, isPending } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.formSubmitHandler} />
-        {this.state.loading && <div>...loading</div>}
+
+        {isPending && <Oval color="#00BFFF" height={80} width={80} />}
         <ImageGallery images={images} />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+        />
       </>
     );
   }
