@@ -1,7 +1,11 @@
 import { Header, Button, Input } from "./Searchbar.styles";
 import { Component } from "react";
+import PropTypes from 'prop-types'
 
 class Searchbar extends Component {
+  static defaultProps = {
+   onSubmit:PropTypes.func.isRequired,
+  }
   state = { query: "" };
 
   handleSetQuery = (e) => {

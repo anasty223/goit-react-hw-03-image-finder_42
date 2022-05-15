@@ -1,6 +1,14 @@
 import { Component } from "react";
-import {Overlay,ModalDiv} from './Modal.styles'
+import { Overlay, ModalDiv } from './Modal.styles'
+import PropTypes from 'prop-types'
+
 class Modal extends Component {
+ static defaultProps = {
+   handleTogleModal: PropTypes.func.isRequired,
+   modalImg: PropTypes.string.isRequired,
+   tag:PropTypes.string.isRequired
+  }
+
 onCloseModalByEsc = (e) => {
     if (e.keyCode === 27) {
       this.props.handleTogleModal();
