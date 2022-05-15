@@ -32,8 +32,8 @@ console.log('this.state in form', this.state)
             name="query"
             type="text"
             onChange={this.handleSetQuery}
-            //     //   autocomplete="off"
-            //     //   autofocus
+                  autoComplete="off"
+                  autoFocus
             placeholder="Search images and photos"
           />
            <Button type="submit" className="button">

@@ -3,8 +3,14 @@ import "./App.css";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Searchbar from "./components/Searchbar/Searchbar";
 import fetchImages from "./servises/fetchImages";
-import { Oval } from "react-loader-spinner";
 import Modal from "./components/Modal/Modal";
+import { ButtonLoadMore } from "./components/Button/Button";
+import { Loader } from "./components/Loader/Loader";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 class App extends Component {
   state = {
@@ -36,14 +42,18 @@ class App extends Component {
           console.log("img", img);
           if (img.length === 0) {
             return (
-              this.setState({ isPending: false }),
-              alert(`нет картинок с запросом "${searchQuery}"`)
+              NotificationManager.warning(
+                "Warning ",
+                `Not found "${searchQuery}"`,
+                3000
+              ),
+              this.setState({ isPending: false, images: [], page: 1 })
             );
           }
           if (searchQuery.trim() === "") {
             return (
-              this.setState({ isPending: false, images: [] }),
-              alert(`Enter text`)
+              NotificationManager.error("Error", "Enter text!", 3000),
+              this.setState({ isPending: false, images: [], page: 1 })
             );
           }
           this.setState((prev) => ({
@@ -56,6 +66,9 @@ class App extends Component {
         });
     }
   }
+  handleLoadMore = () => {
+    this.setState((prev) => ({ page: prev.page + 1, isPending: true }));
+  };
 
   render() {
     const { images, isPending, showModal } = this.state;
@@ -63,9 +76,13 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.formSubmitHandler} />
 
-        {isPending && <Oval color="#00BFFF" height={80} width={80} />}
+        {isPending && <Loader />}
 
         <ImageGallery images={images} handleTogleModal={this.toggleModal} />
+
+        {images.length >= 12 && (
+          <ButtonLoadMore handleLoadMore={this.handleLoadMore} />
+        )}
 
         {showModal && (
           <Modal
@@ -74,6 +91,7 @@ class App extends Component {
             tag={this.state.modalAlt}
           />
         )}
+        <NotificationContainer />
       </>
     );
   }

@@ -1,5 +1,8 @@
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
-import {List} from './ImageGallery.styles'
+import { List } from './ImageGallery.styles'
+import PropTypes from 'prop-types';
+
+
 const ImageGallery = ({ images,handleTogleModal }) => {
   return (
     <List >
@@ -15,4 +18,9 @@ const ImageGallery = ({ images,handleTogleModal }) => {
     </List>
   );
 };
+
+ImageGallery.propTypes = {
+   images: PropTypes.array.isRequired,
+  handleTogleModal: PropTypes.func.isRequired,
+}
 export default ImageGallery;
