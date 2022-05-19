@@ -32,7 +32,7 @@ class App extends Component {
 
   formSubmitHandler = (searchQuery) => {
     console.log("searchQuery", searchQuery);
-    this.setState({ searchQuery, isPending: true });
+    this.setState({ searchQuery, isPending: true, images: [], page: 1 });
   };
   componentDidUpdate() {
     const { searchQuery, page, isPending } = this.state;
@@ -41,21 +41,18 @@ class App extends Component {
         .then((img) => {
           console.log("img", img);
           if (img.length === 0) {
-            return (
-              NotificationManager.warning(
-                "Warning ",
-                `Not found "${searchQuery}"`,
-                3000
-              ),
-              this.setState({ isPending: false, images: [], page: 1 })
+            return NotificationManager.warning(
+              "Warning ",
+              `Not found "${searchQuery}"`,
+              3000
             );
           }
+          this.setState({ isPending: false, page: 1 });
+
           if (searchQuery.trim() === "") {
-            return (
-              NotificationManager.error("Error", "Enter text!", 3000),
-              this.setState({ isPending: false, images: [], page: 1 })
-            );
+            return NotificationManager.error("Error", "Enter text!", 3000);
           }
+
           this.setState((prev) => ({
             images: page > 1 ? [...prev.images, ...img] : img,
             isPending: false,
@@ -76,10 +73,11 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.formSubmitHandler} />
 
+        {images.length >= 1 && (
+          <ImageGallery images={images} handleTogleModal={this.toggleModal} />
+        )}
+
         {isPending && <Loader />}
-
-        <ImageGallery images={images} handleTogleModal={this.toggleModal} />
-
         {images.length >= 12 && (
           <ButtonLoadMore handleLoadMore={this.handleLoadMore} />
         )}
