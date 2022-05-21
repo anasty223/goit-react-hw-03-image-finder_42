@@ -48,7 +48,7 @@ class App extends Component {
               3000
             );
           }
-          this.setState({ isPending: false, page: 1 });
+          this.setState({ isPending: false });
 
           if (searchQuery.trim() === "") {
             return NotificationManager.error("Error", "Enter text!", 3000);
