@@ -11,6 +11,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+import { mapper } from "./utils/mapper";
 
 class App extends Component {
   state = {
